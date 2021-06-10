@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  api-gateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: API-Gateway/Dockerfile
+    depends_on: 
+        - tweet-service
+
+  tweet-service:
+    image: ${DOCKER_REGISTRY-}tweetservice
+    build:
+      context: .
+      dockerfile: tweet-service/Dockerfile
+
+  s65:
+    image: postgres
+    container_name: Database
+    restart: always
+    environment:
+      POSTGRES_USER: postgres  
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8001:8080
+  
