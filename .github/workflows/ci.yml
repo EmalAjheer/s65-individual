@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ./tweet-service.csproj
+      run: dotnet restore s65-individual-backend.sln
     - name: Build
       run: dotnet build ./tweet-service.csproj --no-restore 
     - name: Test
