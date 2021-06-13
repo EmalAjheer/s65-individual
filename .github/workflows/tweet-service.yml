@@ -44,6 +44,6 @@ jobs:
         context: .
         file: ././tweet-service/Dockerfile
         push: true
-        tags: docker.pkg.github.com/emalajheer/tweet-service/tweet-service:latest
+        tags: docker.pkg.github.com/emalajheer/tweet-service/tweet-service
 
       
