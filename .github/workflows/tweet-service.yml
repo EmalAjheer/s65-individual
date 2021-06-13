@@ -42,13 +42,6 @@ jobs:
       with:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-    - name: Build and Push Image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ././tweet-service/Dockerfile       
-        tags: emalajheer/tweet-service/tweet-service:latest
-        push: true
     - name: Build and Push Image V2
       uses: mr-smithers-excellent/docker-build-push@v5.5
       with:
