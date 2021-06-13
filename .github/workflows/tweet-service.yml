@@ -50,5 +50,8 @@ jobs:
         file: ././tweet-service/Dockerfile
         push: true
         tags: emalajheer/tweet-service/tweet-service:latest
+    - name: Docker Push
+      run: |
+        docker push emalajheer/tweet-service:latest
 
       
