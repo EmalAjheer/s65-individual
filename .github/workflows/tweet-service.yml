@@ -32,5 +32,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: tweet-service
+    - name: Build And Push Docker Image
+      uses: docker/login-action@v1
+      with:
+        image: emalajheer/tweet-service
+        registry: docker.pkg.github.com
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+
       
-    
