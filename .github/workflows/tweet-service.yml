@@ -46,7 +46,7 @@ jobs:
     - name: Build and Push Image
       uses: docker/build-push-action@v2.5.0
       with:        
-        super_secret: ${{ secrets.PERMISSION_SECRET }}
+        secrets: ${{ secrets.PERMISSION_SECRET }}
         context: .
         file: ././tweet-service/Dockerfile
         push: true
