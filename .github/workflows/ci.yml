@@ -20,6 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore s65-individueel-backend.sln
     - name: Build
-      run: dotnet build ./tweet-service.csproj --no-restore 
+      run: dotnet build ../tweet-service.csproj --no-restore 
     - name: Test
-      run: dotnet test ./tweet-service.sln --no-build --verbosity normal
+      run: dotnet test ../tweet-service.sln --no-build --verbosity normal
