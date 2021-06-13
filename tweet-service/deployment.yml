@@ -1,0 +1,38 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tweet-service-deployment
+  labels:
+    app: tweet-service-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tweet-service-pod
+  template:
+    metadata:
+      labels:
+        app: tweet-service-pod
+    spec:
+      containers:
+      - name: tweet-service-container
+        image: emalajheer/tweet-service
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tweet-service-service
+spec:
+  selector:
+    app: tweet-service-pod
+  ports:
+  - port: 8085
+    targetPort: 80
+  type: LoadBalancer

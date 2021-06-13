@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "tweet-service.fullname" . }}
+  labels:
+    app: {{ template "tweet-service.name" . }}
+    chart: {{ template "tweet-service.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "tweet-service.name" . }}
+    release: {{ .Release.Name }}
