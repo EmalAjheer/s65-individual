@@ -3,8 +3,14 @@ name: .NET
 on:
   push:
     branches: [ master ]
+    paths:
+      - tweet-service/**
+      - .github/workflows/ci.yml
   pull_request:
     branches: [ master ]
+    paths:
+      - tweet-service/**
+      - .github/workflows/ci.yml
 
 jobs:
   build:
@@ -18,8 +24,13 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore s65-individueel-backend.sln
+      run: dotnet restore
+      working-directory: tweet-service
     - name: Build
-      run: dotnet build @/tweet-service.csproj --no-restore 
+      run: dotnet build --no-restore 
+      working-directory: tweet-service
     - name: Test
-      run: dotnet test @/tweet-service.sln --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
+      working-directory: tweet-service
+      
+    
