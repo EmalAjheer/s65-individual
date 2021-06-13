@@ -45,5 +45,7 @@ jobs:
         file: ././tweet-service/Dockerfile
         push: true
         tags: docker.pkg.github.com/emalajheer/tweet-service/tweet-service:latest
+        secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
 
       
