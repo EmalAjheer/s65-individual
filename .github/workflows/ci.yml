@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./tweet-service.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./tweet-service.csproj --no-restore 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./tweet-service.sln --no-build --verbosity normal
