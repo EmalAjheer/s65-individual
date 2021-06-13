@@ -49,7 +49,16 @@ jobs:
         file: ././tweet-service/Dockerfile       
         tags: emalajheer/tweet-service/tweet-service:latest
         push: true
-    - name: Docker Push
-      run: docker push emalajheer/tweet-service:latest
+    - name: Build and Push Image V2
+      uses: mr-smithers-excellent/docker-build-push@v5.5
+      with:
+        image: tweet-service
+        registry: docker.io
+        directory: .
+        dockerfile: ././tweet-service/Dockerfile       
+        tags: emalajheer/tweet-service/tweet-service:latest
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        push: true
 
       
