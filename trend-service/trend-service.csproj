@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="1.7.0" />
     <PackageReference Include="Keycloak.Net" Version="1.0.18" />
     <PackageReference Include="KubernetesClient" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

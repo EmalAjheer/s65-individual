@@ -14,5 +14,6 @@ namespace tweet_service.Models
         }
 
         public DbSet<Tweet> Tweet { get; set; }
+        public DbSet<Mention> Mention { get; set; }
     }
 }

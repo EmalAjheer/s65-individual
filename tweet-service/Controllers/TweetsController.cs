@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using tweet_service.Interfaces;
 using tweet_service.Models;
 
 namespace tweet_service.Controllers
@@ -14,6 +15,7 @@ namespace tweet_service.Controllers
     public class TweetsController : ControllerBase
     {
         private readonly TweetContext _context;
+        private readonly ITweetService tweetService;
 
         public TweetsController(TweetContext context)
         {
@@ -77,10 +79,7 @@ namespace tweet_service.Controllers
         [HttpPost]
         public async Task<ActionResult<Tweet>> PostTweet(Tweet tweet)
         {
-            tweet.Date_Created = DateTime.Now;
-            _context.Tweet.Add(tweet);
-            await _context.SaveChangesAsync();
-
+            var postTweet = await tweetService.PostTweet(tweet);
             return CreatedAtAction(nameof(GetTweet), new { id = tweet.Id }, tweet);
         }
 
