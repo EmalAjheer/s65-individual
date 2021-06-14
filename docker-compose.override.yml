@@ -9,6 +9,7 @@ services:
     depends_on: 
         - tweet-service
         - trend-service
+        - user-service
     ports:
       - "4444:4444"
     volumes:
