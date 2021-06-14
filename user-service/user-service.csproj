@@ -5,6 +5,7 @@
     <RootNamespace>user_service</RootNamespace>
     <UserSecretsId>a140d7f1-5ebf-4839-9cc6-572f661c8e4f</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>

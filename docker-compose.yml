@@ -8,6 +8,8 @@ services:
       dockerfile: API-Gateway/Dockerfile
     depends_on: 
         - tweet-service
+        - trend-service
+        - user-service
 
   tweet-service:
     image: ${DOCKER_REGISTRY-}tweetservice
@@ -31,3 +33,16 @@ services:
     ports:
       - 8001:8080
   
+  trend-service:
+    image: ${DOCKER_REGISTRY-}trendservice
+    build:
+      context: .
+      dockerfile: trend-service/Dockerfile
+
+
+  user-service:
+    image: ${DOCKER_REGISTRY-}userservice
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+
