@@ -42,16 +42,14 @@ jobs:
       with:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-    - name: Build and Push Image V2
+    - name: Build and Push Image
       uses: mr-smithers-excellent/docker-build-push@v5.5
       with:
-        image: tweet-service
+        image: emalajheer/tweet-service
+        tags: latest
         registry: docker.io
+        dockerfile: tweet-service/Dockerfile
         directory: .
-        dockerfile: ././tweet-service/Dockerfile       
-        tags: emalajheer/tweet-service:latest
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        push: true
-
       
