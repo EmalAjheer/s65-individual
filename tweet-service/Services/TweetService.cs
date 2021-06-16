@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using tweet_service.Interfaces;
 using tweet_service.Models;
@@ -25,21 +26,28 @@ namespace tweet_service.Services
             await context.AddAsync(tweet);
             await context.SaveChangesAsync();
 
-            if (tweet.Description.Contains("@"))
+            /*if (tweet.Description.Contains("@"))
             {
-                var mentions = GetTags(tweet.Description, "@");
+                var mentions = GetTags(tweet.Description, "@", false);
                 foreach (var mention in mentions)
                 {
                     await AddMention(mention, tweet.Id);
                 }
-            }
+            }*/
 
             if (tweet.Description.Contains("#"))
             {
-                var hashtags = GetTags(tweet.Description, "#");
+                var hashtags = GetTags(tweet.Description, "#", true);
                 foreach (var hashtag in hashtags)
                 {
-                    SendToMessagebus("trend_topic", hashtag);
+                    HashtagDTO hashtagDTO = new()
+                    {
+                        TweetId = tweet.Id,
+                        HashtagTitle = hashtag,
+                        CreatedDate = tweet.Date_Created
+                    };
+
+                    SendToMessagebus("trend_topic", hashtagDTO);
                 }
             }
 
@@ -51,21 +59,21 @@ namespace tweet_service.Services
             BootstrapServers = "localhost:9092"
         };
 
-        private void SendToMessagebus(string topic, string hashtag)
+        private void SendToMessagebus(string topic, HashtagDTO hashtag)
         {
             using (var producer =
                 new ProducerBuilder<Null, string>(config).Build())
             {
                 try
                 {
-                    var test = producer.ProduceAsync(topic, new Message<Null, string> { Value = hashtag })
+                    var test = producer.ProduceAsync(topic, new Message<Null, string> { Value = JsonSerializer.Serialize(hashtag) })
                         .GetAwaiter()
                         .GetResult();
-                    Console.WriteLine(test);
+                    Console.WriteLine(test + "yessss messagebus in the pocketttt");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Oops, something went wrong: {e}");
+                    Console.WriteLine($"Oops, something went horribly wrong: {e}");
                 }
             }
         }
@@ -74,21 +82,25 @@ namespace tweet_service.Services
         {
             Mention mention = new Mention();
             mention.TweetId = tweetId;
-            mention.userName = userName;
+            mention.UserName = userName;
 
             await context.AddAsync(mention);
             await context.SaveChangesAsync();
         }
 
-        private List<string> GetTags(string tweet, string tag)
+        private List<string> GetTags(string tweet, string tag, bool withHashtag)
         {
             string[] stringList = tweet.Split(" ");
             List<string> tags = new List<string>();
             foreach (var x in stringList)
             {
-                if (x.StartsWith(tag))
+                if (x.StartsWith(tag) && !withHashtag)
                 {
                     tags.Add(x.Substring(1));
+                }
+                if (x.StartsWith(tag) && withHashtag)
+                {
+                    tags.Add(x);
                 }
             }
             return tags;

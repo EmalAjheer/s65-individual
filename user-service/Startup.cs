@@ -41,8 +41,10 @@ namespace user_service
                     builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 });
             });
-
-            services.AddDbContext<UserContext>(options => options.UseNpgsql("Host=localhost; port=5432; Database=userdb; Username=postgres; Password=admin"));
+            var connectionString = Configuration["Data:DbContext:ConnectionString"];
+            //"Host=localhost; port=5432; Database=tweetdb; Username=postgres; Password=admin"
+            //"Server=s65; port=5432; Database=tweetdb; Username=postgres; Password=admin"
+            services.AddDbContext<UserContext>(options => options.UseNpgsql(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,9 +59,9 @@ namespace user_service
 
             app.UseCors("CorsPolicyAllHosts");
 
-            userContext.Database.EnsureCreated();
+            //userContext.Database.EnsureCreated();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

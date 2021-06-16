@@ -22,3 +22,5 @@ Postgres & Docker:
 - create table student(); 
 - \dt; (list of relations/tables)
 - \d student; (in table gaan)
+
+- docker-compose up --force-recreate --build -d

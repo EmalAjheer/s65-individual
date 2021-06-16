@@ -17,9 +17,10 @@ namespace tweet_service.Controllers
         private readonly TweetContext _context;
         private readonly ITweetService tweetService;
 
-        public TweetsController(TweetContext context)
+        public TweetsController(TweetContext context, ITweetService tweetService)
         {
             _context = context;
+            this.tweetService = tweetService;
         }
 
         // GET: api/Tweets
@@ -77,7 +78,7 @@ namespace tweet_service.Controllers
         // POST: api/Tweets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Tweet>> PostTweet(Tweet tweet)
+        public async Task<IActionResult> PostTweet( Tweet tweet)
         {
             var postTweet = await tweetService.PostTweet(tweet);
             return CreatedAtAction(nameof(GetTweet), new { id = tweet.Id }, tweet);

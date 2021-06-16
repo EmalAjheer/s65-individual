@@ -46,6 +46,7 @@ namespace tweet_service
             });
             var connectionString = Configuration["Data:DbContext:ConnectionString"];
             //"Host=localhost; port=5432; Database=tweetdb; Username=postgres; Password=admin"
+            //"Server=s65; port=5432; Database=tweetdb; Username=postgres; Password=admin"
             services.AddDbContext<TweetContext>(options => options.UseNpgsql(connectionString));
         }
 
