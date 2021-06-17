@@ -48,7 +48,7 @@ namespace trend_service
 
             var connectionString = Configuration["Data:DbContext:ConnectionString"];
             //"Host=localhost; port=5432; Database=trenddb; Username=postgres; Password=admin"
-            //"Server=s65; port=5432; Database=trenddb; Username=postgres; Password=admin"
+            //"Server=s65trend; port=5433; Database=trenddb; Username=postgres; Password=admin"
             services.AddDbContext<HashtagContext>(options => options.UseNpgsql(connectionString));
             //
             services.AddScoped<ITrendService, TrendService>();
@@ -65,7 +65,7 @@ namespace trend_service
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "trend_service v1"));
             }
 
-            //hashtagContext.Database.EnsureCreated();
+            hashtagContext.Database.EnsureCreated();
             // app.UseHttpsRedirection();
             app.UseCors("CorsPolicyAllHosts");
 

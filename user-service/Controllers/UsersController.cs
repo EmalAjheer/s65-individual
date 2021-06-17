@@ -41,6 +41,20 @@ namespace user_service.Controllers
             return user;
         }
 
+        // GET: api/Users/5  BY MENTION
+        [HttpGet("/getUserIdByMention/{mention}")]
+        public async Task<ActionResult<Guid>> GetUserBy(string mention)
+        {
+            var user = await _context.User.FirstOrDefaultAsync(x => x.UserName == mention);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user.Id;
+        }
+
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -103,5 +117,16 @@ namespace user_service.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
+
+        [HttpGet("/getFollowingUserIds/{userId}")]
+        public ActionResult<IEnumerable<Guid>> GetFollowingUserIds(Guid userId)
+        {
+
+            var followingUserNames = _context.Following.Where(x => x.CurrentUserId == userId).Select(x => x.FollowingUserId).ToList();
+
+            return followingUserNames;
+        }
+
+
     }
 }

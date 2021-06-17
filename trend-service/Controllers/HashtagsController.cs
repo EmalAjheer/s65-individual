@@ -109,6 +109,13 @@ namespace trend_service.Controllers
             return NoContent();
         }
 
+        [HttpGet("/tweetIdsByHashtag/{hashtag}")]
+        public async Task<ActionResult<IEnumerable<Guid>>> GetTweetIdsByHashtag(string hashtag)
+        {
+            string withHastag = "#" + hashtag;
+            return await _context.Hashtag.Where(x => x.HashtagTitle == withHastag).Select(y => y.TweetId).ToListAsync();
+        }
+
         private bool HashtagExists(Guid id)
         {
             return _context.Hashtag.Any(e => e.Id == id);

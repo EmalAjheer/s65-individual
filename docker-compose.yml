@@ -7,25 +7,48 @@ services:
       context: .
       dockerfile: API-Gateway/Dockerfile
     depends_on: 
-        - tweet-service
-        - trend-service
-        - user-service
+      - tweet-service
+      - trend-service
+      - user-service
 
   tweet-service:
     image: ${DOCKER_REGISTRY-}tweetservice
     build:
       context: .
       dockerfile: tweet-service/Dockerfile
-
-  s65:
+  
+  s65user:
     image: postgres
-    container_name: Database
     restart: always
     environment:
       POSTGRES_USER: postgres  
       POSTGRES_PASSWORD: admin
+    volumes:
+      - s65user-data:/var/lib/postgresql/data
+    ports:
+      - 5431:5432
+
+  s65tweet:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres  
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - s65tweet-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
+  s65trend:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres  
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - s65trend-data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
 
   adminer:
     image: adminer
@@ -62,3 +85,11 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  s65user-data:
+    driver: local
+  s65tweet-data:
+    driver: local
+  s65trend-data:
+    driver: local

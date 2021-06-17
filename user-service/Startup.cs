@@ -42,8 +42,8 @@ namespace user_service
                 });
             });
             var connectionString = Configuration["Data:DbContext:ConnectionString"];
-            //"Host=localhost; port=5432; Database=tweetdb; Username=postgres; Password=admin"
-            //"Server=s65; port=5432; Database=tweetdb; Username=postgres; Password=admin"
+            //"Host=localhost; port=5432; Database=userdb; Username=postgres; Password=admin"
+            //"Server=s65user; port=5431; Database=userdb; Username=postgres; Password=admin"
             services.AddDbContext<UserContext>(options => options.UseNpgsql(connectionString));
         }
 
@@ -59,7 +59,7 @@ namespace user_service
 
             app.UseCors("CorsPolicyAllHosts");
 
-            //userContext.Database.EnsureCreated();
+            userContext.Database.EnsureCreated();
 
             //app.UseHttpsRedirection();
 

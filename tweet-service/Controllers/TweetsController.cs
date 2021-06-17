@@ -30,6 +30,48 @@ namespace tweet_service.Controllers
             return await _context.Tweet.ToListAsync();
         }
 
+        // GET: api/TweetsByUserId/5
+        [HttpGet("TweetsByUserId/{userId}")]
+        public ActionResult<IEnumerable<Tweet>> GetTweetByUserId(Guid userId)
+        {
+            var tweetList = _context.Tweet.Where(e => e.UserId == userId).ToList();
+
+            if (tweetList == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(tweetList);
+        }
+
+        [HttpGet("mentionedTweets/{userId}")]        
+        public async Task<ActionResult<IEnumerable<Tweet>>> GetMentionedTweetsAsync(Guid userId)
+        {
+            var tweets = await tweetService.GetTweetsByMentionAsync(userId);
+            return Ok(tweets);
+        }
+
+        [HttpGet("tweetsFollowing/{userId}")]
+        public async Task<ActionResult<IEnumerable<Tweet>>> GetTweetsFollowers(Guid userId)
+        {
+            var tweets = await tweetService.GetTweetsFollowers(userId);
+            return Ok(tweets);
+        }
+
+        [HttpGet("getTweetsFromTrend/{hashtag}")]
+        public async Task<ActionResult<IEnumerable<Tweet>>> GetTweetsFromTrend(string hashtag)
+        {
+            var tweets = await tweetService.GetTweetsFromTrend(hashtag);
+            return Ok(tweets);
+        }
+
+
+
+
+
+
+
+
         // GET: api/Tweets/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Tweet>> GetTweet(Guid id)
@@ -43,6 +85,8 @@ namespace tweet_service.Controllers
 
             return tweet;
         }
+
+        
 
         // PUT: api/Tweets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
