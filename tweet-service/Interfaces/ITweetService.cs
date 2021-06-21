@@ -13,6 +13,7 @@ namespace tweet_service.Interfaces
         Task<IEnumerable<Mention>> GetTweetsByMentionAsync(Guid userId);
         Task<IEnumerable<Tweet>> GetTweetsFollowers(Guid userId);       
         Task<IEnumerable<Tweet>> GetTweetsFromTrend(string hashtag);
+        void DeleteAllTweets(Guid id);
     }
 
 

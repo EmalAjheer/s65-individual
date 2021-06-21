@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using tweet_service.Models;
 using tweet_service.Services;
 using tweet_service.Interfaces;
+using tweet_service.KafkaConsumers;
 
 namespace tweet_service
 {
@@ -48,6 +49,8 @@ namespace tweet_service
             //"Host=localhost; port=5432; Database=tweetdb; Username=postgres; Password=admin"
             //"Server=s65tweet; port=5432; Database=tweetdb; Username=postgres; Password=admin"
             services.AddDbContext<TweetContext>(options => options.UseNpgsql(connectionString));
+
+            services.AddSingleton<IHostedService, KafkaConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

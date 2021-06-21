@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Confluent.Kafka;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using user_service.Models;
+using user_service.Producers;
 
 namespace user_service.Controllers
 {
@@ -14,10 +16,12 @@ namespace user_service.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserContext _context;
+        private readonly KafkaProducer kafkaProducer;
 
         public UsersController(UserContext context)
         {
             _context = context;
+            kafkaProducer = new();
         }
 
         // GET: api/Users
@@ -107,11 +111,13 @@ namespace user_service.Controllers
                 return NotFound();
             }
 
+            kafkaProducer.DeleteAllTweets("delete_user_topic", id);
+
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
+        }        
 
         private bool UserExists(Guid id)
         {

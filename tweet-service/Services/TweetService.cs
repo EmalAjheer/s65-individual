@@ -146,5 +146,11 @@ namespace tweet_service.Services
                                .Where(t => tweetIds.Contains(t.Id));
             return tweets;
         }
+
+        public void DeleteAllTweets(Guid id)
+        {
+            context.Tweet.RemoveRange(context.Tweet.Where(x => x.UserId == id));
+            context.SaveChanges();
+        }
     }
 }
