@@ -35,6 +35,7 @@ namespace tweet_service.KafkaConsumers
 
             await Task.Run(() =>
             {
+                //moet je per se elke keer een nieuwe builder maken?
                 using (var builder = new ConsumerBuilder<Ignore, string>(conf).Build())
                 {
                     builder.Subscribe("delete_user_topic");

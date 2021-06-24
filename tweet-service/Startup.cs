@@ -65,7 +65,7 @@ namespace tweet_service
 
             app.UseCors("CorsPolicyAllHosts");
 
-            tweetContext.Database.EnsureCreated();
+            //tweetContext.Database.EnsureCreated();
 
             //app.UseHttpsRedirection();
 

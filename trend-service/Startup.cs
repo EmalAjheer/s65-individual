@@ -65,7 +65,7 @@ namespace trend_service
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "trend_service v1"));
             }
 
-            hashtagContext.Database.EnsureCreated();
+            //hashtagContext.Database.EnsureCreated();
             // app.UseHttpsRedirection();
             app.UseCors("CorsPolicyAllHosts");
 

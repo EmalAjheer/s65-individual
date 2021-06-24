@@ -59,7 +59,7 @@ namespace user_service
 
             app.UseCors("CorsPolicyAllHosts");
 
-            userContext.Database.EnsureCreated();
+            //userContext.Database.EnsureCreated();
 
             //app.UseHttpsRedirection();
 

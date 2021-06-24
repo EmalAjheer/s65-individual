@@ -16,6 +16,8 @@ namespace user_service.Producers
 
         private void SendToMessagebus(string topic, Guid id)
         {
+            //is het nodig om elke keer een producer aan te maken? bij de consumer maak je het maar 1 keer aan. 
+            //kijk hier nog even naar.
             using (var producer =
                 new ProducerBuilder<Null, string>(config).Build())
             {

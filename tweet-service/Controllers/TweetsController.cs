@@ -124,7 +124,12 @@ namespace tweet_service.Controllers
         [HttpPost]
         public async Task<IActionResult> PostTweet( Tweet tweet)
         {
-            var postTweet = await tweetService.PostTweet(tweet);
+            //Dit is niet nodig, want de apicontroller regelt de badrequests en de bijbehorende responses zelf.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var postTweet = await tweetService.PostTweet(tweet);            
             return CreatedAtAction(nameof(GetTweet), new { id = tweet.Id }, tweet);
         }
 

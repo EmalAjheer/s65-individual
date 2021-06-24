@@ -16,18 +16,23 @@ namespace tweet_service.Services
         private readonly TweetContext context;
         private readonly UserService userService;
         private readonly TrendService trendService;
+        private readonly TweetPurifierService tweetPurifierService;
 
         public TweetService(TweetContext context, IConfiguration config)
         {
             this.context = context;
             this.userService = new UserService(config);
             this.trendService = new TrendService(config);
+            this.tweetPurifierService = new TweetPurifierService(config);
         }
+
 
         public async Task<Tweet> PostTweet(Tweet tweet)
         {
             tweet.Id = new Guid();
             tweet.Date_Created = DateTime.Now;
+
+            tweet.Description = await tweetPurifierService.SendToAzure(tweet.Description);
 
             await context.AddAsync(tweet);
             await context.SaveChangesAsync();
